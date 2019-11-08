@@ -11,7 +11,15 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
+        setContentView(R.layout.activity_weather);
         Log.i(TAG, "This is onCreate function");
+
+        // Create a new Fragment to be placed in the activity
+        ForecastFragment forecastFragment = new ForecastFragment();
+
+        // Add the fragment to the 'container' FrameLayout
+        getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).commit();
+
     }
 
     @Override
@@ -23,7 +31,7 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.i(TAG, "This is oneResume function");
+        Log.i(TAG, "This is onResume function");
     }
 
     @Override
