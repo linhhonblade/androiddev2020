@@ -21,7 +21,6 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//         Inflate the layout for this fragment
 
         ScrollView scrollView = (ScrollView) inflater.inflate(R.layout.fragment_forecast, container, false);
         LinearLayout linearLayout = scrollView.findViewById(R.id.weather);
