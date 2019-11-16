@@ -1,20 +1,18 @@
 package vn.edu.usth.usth.weather;
-
 import android.os.Bundle;
-
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.util.Random;
 
 
 public class ForecastFragment extends Fragment {
@@ -24,24 +22,53 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 //         Inflate the layout for this fragment
-//         View v = new View(getContext());
-//         v.setBackgroundColor(0xFFFF0000);
+
+        ScrollView scrollView = (ScrollView) inflater.inflate(R.layout.fragment_forecast, container, false);
+        LinearLayout linearLayout = scrollView.findViewById(R.id.weather);
+        LinearLayout row;
+        TextView txt;
+        ImageView icon;
+        TextView weather_txt;
 
 
-        TextView day_text = new TextView(getActivity());
-        day_text.setText("Thursday");
-        day_text.setGravity(Gravity.CENTER);
+        String days[] = {"Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"};
+        String weather[] = {"Rain", "Sunny", "Heavy Rain", "Cloudy"};
 
-        ImageView weatherIcon = new ImageView(getActivity());
-        weatherIcon.setImageResource(R.drawable.rainy);
+        Random r = new Random();
+        int a;
 
-        LinearLayout linearLayout = new LinearLayout(getActivity());
-        linearLayout.setBackgroundColor(0xFF11DDCC);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.addView(day_text);
-        linearLayout.addView(weatherIcon);
+        for(int i = 0; i < 20; i ++){
+            row = (LinearLayout) inflater.inflate(R.layout.row, container, false);
 
-        return linearLayout;
+            txt = row.findViewById(R.id.txt_day);
+            icon = row.findViewById(R.id.icon);
+            weather_txt = row.findViewById(R.id.weather_txt);
+
+            a = r.nextInt(50);
+            txt.setText(days[i % 7]);
+            weather_txt.setText(weather[a % 4]);
+            switch (a % 4){
+                case 0:
+                    icon.setImageResource(R.drawable.rain);
+                    break;
+                case 1:
+                    icon.setImageResource(R.drawable.sunny);
+                    break;
+                case 2:
+                    icon.setImageResource(R.drawable.heavy_rain);
+                    break;
+                case 3:
+                    icon.setImageResource(R.drawable.cloudy);
+                    break;
+            }
+
+            linearLayout.addView(row);
+
+
+        }
+
+
+        return scrollView;
     }
 
 }
