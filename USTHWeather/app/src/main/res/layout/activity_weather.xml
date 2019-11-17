@@ -11,5 +11,10 @@
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/pager" />
+        android:id="@+id/pager" >
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab_layout" />
+    </androidx.viewpager.widget.ViewPager>
 </LinearLayout>

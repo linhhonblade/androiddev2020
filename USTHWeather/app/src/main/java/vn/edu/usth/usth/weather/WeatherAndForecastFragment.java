@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.android.material.tabs.TabLayout;
 
 
 /**
@@ -28,8 +31,12 @@ public class WeatherAndForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
         WeatherFragment weatherFragment = new WeatherFragment();
+        weatherFragment.setArguments(this.getArguments());
+
         ForecastFragment forecastFragment = new ForecastFragment();
+
 
         fragmentTransaction.replace(R.id.fragment_weather, weatherFragment);
         fragmentTransaction.addToBackStack(null);
@@ -39,9 +46,14 @@ public class WeatherAndForecastFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
+
+
         fragmentTransaction.commit();
 
-        return inflater.inflate(R.layout.fragment_weather_and_forecast, container, false);
+        LinearLayout fragment_weather = (LinearLayout) inflater.inflate(R.layout.fragment_weather_and_forecast, container, false);
+
+
+        return fragment_weather;
     }
 
 }

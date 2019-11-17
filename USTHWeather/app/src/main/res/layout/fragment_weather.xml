@@ -18,8 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/top_right"
-        android:layout_alignParentRight="true"
-        android:text="Paris" />
+        android:layout_alignParentRight="true" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
