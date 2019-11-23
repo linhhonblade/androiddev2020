@@ -4,4 +4,39 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="day_string">Thursday</string>
+    <string name="sample_temp" translatable="false">12C</string>
+    <string name="location_paris" translatable="false">Paris</string>
+    <string name="location_hanoi">Hanoi</string>
+    <string name="location_tokyo" translatable="false">Tokyo</string>
+
+    <string name="day_mon">Mon</string>
+    <string name="day_tues">Tues</string>
+    <string name="day_wed">Wed</string>
+    <string name="day_thurs">Thurs</string>
+    <string name="day_fri">Fri</string>
+    <string name="day_sat">Sat</string>
+    <string name="day_sun">Sun</string>
+    
+    <string-array name="day_array">
+        <item>@string/day_mon</item>
+        <item>@string/day_tues</item>
+        <item>@string/day_wed</item>
+        <item>@string/day_thurs</item>
+        <item>@string/day_fri</item>
+        <item>@string/day_sat</item>
+        <item>@string/day_sun</item>
+    </string-array>
+
+
+    <string name="weather_rain">Rain</string>
+    <string name="weather_sunny">Sunny</string>
+    <string name="weather_heavy_rain">Heavy Rain</string>
+    <string name="weather_cloudy">Cloudy</string>
+    
+    <string-array name="weather_array">
+        <item>@string/weather_rain</item>
+        <item>@string/weather_sunny</item>
+        <item>@string/weather_heavy_rain</item>
+        <item>@string/weather_cloudy</item>
+    </string-array>
 </resources>

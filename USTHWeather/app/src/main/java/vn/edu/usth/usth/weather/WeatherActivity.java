@@ -21,7 +21,7 @@ public class WeatherActivity extends AppCompatActivity {
         Log.i(TAG, "This is onCreate function");
 
         viewPager = findViewById(R.id.pager);
-        adapter = new Adapter(getSupportFragmentManager());
+        adapter = new Adapter(getSupportFragmentManager(), this.getApplicationContext());
         viewPager.setAdapter(adapter);
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);

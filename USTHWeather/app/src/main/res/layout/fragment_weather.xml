@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     tools:context=".WeatherFragment"
     android:id="@+id/relative_layout"
-    android:padding="20px"
+    android:padding="@dimen/main_activity_padding"
     android:background="@color/colorCustom">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/top_left"
         android:layout_alignParentLeft="true"
-        android:text="12C" />
+        android:text="@string/sample_temp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +26,6 @@
         android:src="@drawable/rain"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:paddingBottom="20px" />
+        android:paddingBottom="@dimen/main_activity_padding" />
 
 </RelativeLayout>

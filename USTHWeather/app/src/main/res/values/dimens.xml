@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_activity_padding">20px</dimen>
+    <dimen name="row_padding">10px</dimen>
+    <dimen name="image_view_layout_height">40dp</dimen>
+</resources>

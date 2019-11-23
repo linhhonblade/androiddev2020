@@ -33,13 +33,13 @@ public class WeatherFragment extends Fragment {
         int pos = Integer.parseInt(getArguments().getString("position"));
         switch (pos){
             case 1:
-                location.setText("Paris");
+                location.setText(R.string.location_paris);
                 break;
             case 2:
-                location.setText("Hanoi");
+                location.setText(R.string.location_hanoi);
                 break;
             case 3:
-                location.setText("Tokyo");
+                location.setText(R.string.location_tokyo);
                 break;
         }
 

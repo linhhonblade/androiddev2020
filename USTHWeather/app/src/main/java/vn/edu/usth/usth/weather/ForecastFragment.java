@@ -30,8 +30,8 @@ public class ForecastFragment extends Fragment {
         TextView weather_txt;
 
 
-        String days[] = {"Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"};
-        String weather[] = {"Rain", "Sunny", "Heavy Rain", "Cloudy"};
+        String days[] = getResources().getStringArray(R.array.day_array);
+        String weather[] = getResources().getStringArray(R.array.weather_array);
 
         Random r = new Random();
         int a;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thời Tiết USTH</string>
+    <string name="day_fri">Sáu</string>
+    <string name="day_mon">Hai</string>
+    <string name="day_sat">Bảy</string>
+    <string name="day_string">Thứ Năm</string>
+    <string name="day_sun">C.Nhật</string>
+    <string name="day_thurs">Năm</string>
+    <string name="day_tues">Ba</string>
+    <string name="day_wed">Tư</string>
+    <string name="hello_blank_fragment">Xin chào fragment trống</string>
+    <string name="location_hanoi">Hà Nội</string>
+    <string name="weather_cloudy">Mây</string>
+    <string name="weather_heavy_rain">Mưa Lớn</string>
+    <string name="weather_rain">Mưa</string>
+    <string name="weather_sunny">Nắng</string>
+</resources>
