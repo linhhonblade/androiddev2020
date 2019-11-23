@@ -6,7 +6,7 @@
     tools:context=".WeatherFragment"
     android:id="@+id/relative_layout"
     android:padding="@dimen/main_activity_padding"
-    android:background="@color/colorCustom">
+    android:background="@drawable/frame">
 
     <TextView
         android:layout_width="wrap_content"
