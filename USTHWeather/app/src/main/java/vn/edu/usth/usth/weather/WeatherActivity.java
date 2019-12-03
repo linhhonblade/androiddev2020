@@ -3,6 +3,7 @@ package vn.edu.usth.usth.weather;
 import android.content.Intent;
 import android.media.MediaPlayer;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -73,8 +74,6 @@ public class WeatherActivity extends AppCompatActivity {
         writeExternal();
         readFromExternal();
 
-
-
     }
 
     private void writeExternal() {
@@ -108,28 +107,53 @@ public class WeatherActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.refresh_button:
-                Thread t = new Thread(new Runnable() {
+//                Thread t = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // wait for 3s to simulate a network access
+//                        try {
+//                            Thread.sleep(3000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        // Assume we got our data from server
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("server_response", "some json here");
+//
+//                        // notify main thread
+//                        Message msg = new Message();
+//                        msg.setData(bundle);
+//                        networkHandler.sendMessage(msg);
+//                    }
+//                });
+//
+//                t.start();
+
+                AsyncTask<String, Integer, String> task = new AsyncTask<String, Integer, String>() {
                     @Override
-                    public void run() {
-                        // wait for 3s to simulate a network access
+                    protected String doInBackground(String... strings) {
                         try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException e) {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e){
                             e.printStackTrace();
                         }
-
-                        // Assume we got our data from server
-                        Bundle bundle = new Bundle();
-                        bundle.putString("server_response", "some json here");
-
-                        // notify main thread
-                        Message msg = new Message();
-                        msg.setData(bundle);
-                        networkHandler.sendMessage(msg);
+                        return "some json here";
                     }
-                });
 
-                t.start();
+                    @Override
+                    protected void onPreExecute() {
+                        Toast.makeText(getApplicationContext(), "preparing for refresh", Toast.LENGTH_LONG);
+                    }
+
+                    @Override
+                    protected void onPostExecute(String content) {
+                        Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
+                    }
+                };
+
+                task.execute("some useless url");
+
                 break;
             case R.id.triple_dots_button:
                 View triple_dot_view = findViewById(R.id.triple_dots_button);
