@@ -16,7 +16,7 @@
     <string name="day_fri">Fri</string>
     <string name="day_sat">Sat</string>
     <string name="day_sun">Sun</string>
-    
+
     <string-array name="day_array">
         <item>@string/day_mon</item>
         <item>@string/day_tues</item>
@@ -32,7 +32,7 @@
     <string name="weather_sunny">Sunny</string>
     <string name="weather_heavy_rain">Heavy Rain</string>
     <string name="weather_cloudy">Cloudy</string>
-    
+
     <string-array name="weather_array">
         <item>@string/weather_rain</item>
         <item>@string/weather_sunny</item>

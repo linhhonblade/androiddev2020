@@ -1,11 +1,18 @@
 package vn.edu.usth.usth.weather;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 
 import android.os.Bundle;
 import android.os.Environment;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.zip.Inflater;
 
 public class WeatherActivity extends AppCompatActivity {
     private static final String TAG = "Weather Activity";
@@ -31,7 +39,7 @@ public class WeatherActivity extends AppCompatActivity {
     private String filepath;
     @Override
     public void onCreate(Bundle saveInstanceState){
-        filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/vn.edu.usth.weather/";
+        filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/vn.edu.usth.usth.weather/";
         Log.i("MP3 Image path File: ", filepath);
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_weather);
@@ -79,6 +87,42 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.app_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.refresh_button:
+                this.recreate();
+                break;
+            case R.id.triple_dots_button:
+                View triple_dot_view = findViewById(R.id.triple_dots_button);
+                PopupMenu popupMenu = new PopupMenu(this, triple_dot_view);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.settings:
+                                Intent intent = new Intent(getApplicationContext(), PrefActivity.class);
+                                startActivity(intent);
+                                return true;
+                            case R.id.something:
+                                Toast.makeText(getApplicationContext(), "something is something is doing something here", Toast.LENGTH_LONG).show();
+                                return true;
+                                default:
+                                    return false;
+                        }
+                    }
+
+                });
+                popupMenu.inflate(R.menu.popup_menu);
+                popupMenu.show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/refresh_button"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/ic_refresh"
+        />
+    <item
+        android:id="@+id/triple_dots_button"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/ic_triple_dots" />
+</menu>
