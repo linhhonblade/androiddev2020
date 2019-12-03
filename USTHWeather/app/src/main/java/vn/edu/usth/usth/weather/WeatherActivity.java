@@ -6,6 +6,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,6 +40,14 @@ public class WeatherActivity extends AppCompatActivity {
     private File myFile;
     private String filename = "background.mp3";
     private String filepath;
+    private final Handler networkHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            String content = msg.getData().getString("server_response");
+            Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
+        }
+    };
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/vn.edu.usth.usth.weather/";
@@ -61,6 +72,8 @@ public class WeatherActivity extends AppCompatActivity {
 
         writeExternal();
         readFromExternal();
+
+
 
     }
 
@@ -95,7 +108,28 @@ public class WeatherActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.refresh_button:
-                this.recreate();
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // wait for 3s to simulate a network access
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        // Assume we got our data from server
+                        Bundle bundle = new Bundle();
+                        bundle.putString("server_response", "some json here");
+
+                        // notify main thread
+                        Message msg = new Message();
+                        msg.setData(bundle);
+                        networkHandler.sendMessage(msg);
+                    }
+                });
+
+                t.start();
                 break;
             case R.id.triple_dots_button:
                 View triple_dot_view = findViewById(R.id.triple_dots_button);
