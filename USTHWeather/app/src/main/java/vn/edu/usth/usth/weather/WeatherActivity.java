@@ -194,7 +194,7 @@ public class WeatherActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-//                        connection.disconnect();
+                        connection.disconnect();
                         return bitmap;
                     }
 
