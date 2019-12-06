@@ -30,6 +30,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Response;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -44,6 +47,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.zip.Inflater;
+import com.android.volley.RequestQueue;
 
 public class WeatherActivity extends AppCompatActivity {
     private static final String TAG = "Weather Activity";
@@ -61,8 +65,12 @@ public class WeatherActivity extends AppCompatActivity {
         }
     };
 
+    private RequestQueue requestQueue;
+
+
     @Override
     public void onCreate(Bundle saveInstanceState){
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
         filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/vn.edu.usth.usth.weather/";
         Log.i("MP3 Image path File: ", filepath);
         super.onCreate(saveInstanceState);
@@ -166,49 +174,59 @@ public class WeatherActivity extends AppCompatActivity {
 //
 //                task.execute("some useless url");
 
-                AsyncTask<String, Integer, Bitmap> getLogoTask = new AsyncTask<String, Integer, Bitmap>() {
-                    Bitmap bitmap;
-                    HttpURLConnection connection;
+//                AsyncTask<String, Integer, Bitmap> getLogoTask = new AsyncTask<String, Integer, Bitmap>() {
+//                    Bitmap bitmap;
+//                    HttpURLConnection connection;
+//                    @Override
+//                    protected Bitmap doInBackground(String... strings) {
+//                        URL url = null;
+//                        try {
+//                            url = new URL(strings[0]);
+//                        } catch (MalformedURLException e) {
+//                            e.printStackTrace();
+//                        }
+//                        connection = null;
+//                        try {
+//                            connection = (HttpURLConnection) url.openConnection();
+//                            connection.setRequestMethod("GET");
+//                            connection.setDoInput(true);
+//                            connection.connect();
+//                            int response = connection.getResponseCode();
+//                            Log.i("From ForecastFragment", "The response code is " + response);
+//                        } catch (IOException ioException ) {
+//                            ioException.printStackTrace();
+//                        }
+//                        try {
+//                            InputStream is = connection.getInputStream();
+//                            bitmap = BitmapFactory.decodeStream(is);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        connection.disconnect();
+//                        return bitmap;
+//                    }
+//
+//                    protected void onPostExecute(Bitmap bitmap) {
+////                        ImageView imageView = findViewById(R.id.logo);
+////                        imageView.setImageBitmap(bitmap);
+//                        WeatherAndForecastFragment weatherAndForecastFragment = (WeatherAndForecastFragment) adapter.instantiateItem(viewPager, viewPager.getCurrentItem());
+//                        ForecastFragment forecastFragment = (ForecastFragment) weatherAndForecastFragment.getChildFragmentManager().findFragmentById(R.id.fragment_forecast);
+//                        ImageView logo = forecastFragment.getView().findViewById(R.id.logo);
+//                        logo.setImageBitmap(bitmap);
+//
+//                    }
+//                };
+//                getLogoTask.execute("https://usth.edu.vn/uploads/logo.png");
+                Response.Listener<Bitmap> listener = new Response.Listener<Bitmap>() {
                     @Override
-                    protected Bitmap doInBackground(String... strings) {
-                        URL url = null;
-                        try {
-                            url = new URL(strings[0]);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
-                        connection = null;
-                        try {
-                            connection = (HttpURLConnection) url.openConnection();
-                            connection.setRequestMethod("GET");
-                            connection.setDoInput(true);
-                            connection.connect();
-                            int response = connection.getResponseCode();
-                            Log.i("From ForecastFragment", "The response code is " + response);
-                        } catch (IOException ioException ) {
-                            ioException.printStackTrace();
-                        }
-                        try {
-                            InputStream is = connection.getInputStream();
-                            bitmap = BitmapFactory.decodeStream(is);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        connection.disconnect();
-                        return bitmap;
-                    }
-
-                    protected void onPostExecute(Bitmap bitmap) {
-//                        ImageView imageView = findViewById(R.id.logo);
-//                        imageView.setImageBitmap(bitmap);
-                        WeatherAndForecastFragment weatherAndForecastFragment = (WeatherAndForecastFragment) adapter.instantiateItem(viewPager, viewPager.getCurrentItem());
-                        ForecastFragment forecastFragment = (ForecastFragment) weatherAndForecastFragment.getChildFragmentManager().findFragmentById(R.id.fragment_forecast);
-                        ImageView logo = forecastFragment.getView().findViewById(R.id.logo);
-                        logo.setImageBitmap(bitmap);
-
+                    public void onResponse(Bitmap response) {
+                        ImageView iv = findViewById(R.id.logo);
+                        iv.setImageBitmap(response);
                     }
                 };
-                getLogoTask.execute("https://usth.edu.vn/uploads/logo.png");
+                ImageRequest imageRequest = new ImageRequest("https://usth.edu.vn/uploads/logo.png", listener, 0, 0, ImageView.ScaleType.CENTER, Bitmap.Config.ARGB_8888, null);
+                requestQueue.add(imageRequest);
+
                 break;
             case R.id.triple_dots_button:
                 View triple_dot_view = findViewById(R.id.triple_dots_button);
