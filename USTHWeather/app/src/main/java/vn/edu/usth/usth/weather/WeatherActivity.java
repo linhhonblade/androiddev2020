@@ -1,6 +1,11 @@
 package vn.edu.usth.usth.weather;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.media.MediaPlayer;
 
 import android.os.AsyncTask;
@@ -15,7 +20,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +39,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.zip.Inflater;
 
 public class WeatherActivity extends AppCompatActivity {
@@ -64,15 +76,15 @@ public class WeatherActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 //        Create a new Fragment to be placed in the activity
-        ForecastFragment forecastFragment = new ForecastFragment();
+//        ForecastFragment forecastFragment = new ForecastFragment();
 
 //        Add the fragment to the 'container' FrameLayout
-        getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).commit();
+//        getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).commit();
 
 
-
-        writeExternal();
-        readFromExternal();
+//
+//        writeExternal();
+//        readFromExternal();
 
     }
 
@@ -130,30 +142,73 @@ public class WeatherActivity extends AppCompatActivity {
 //
 //                t.start();
 
-                AsyncTask<String, Integer, String> task = new AsyncTask<String, Integer, String>() {
+//                AsyncTask<String, Integer, String> task = new AsyncTask<String, Integer, String>() {
+//                    @Override
+//                    protected String doInBackground(String... strings) {
+//                        try {
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e){
+//                            e.printStackTrace();
+//                        }
+//                        return "some json here";
+//                    }
+//
+//                    @Override
+//                    protected void onPreExecute() {
+//                        Toast.makeText(getApplicationContext(), "preparing for refresh", Toast.LENGTH_LONG);
+//                    }
+//
+//                    @Override
+//                    protected void onPostExecute(String content) {
+//                        Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
+//                    }
+//                };
+//
+//                task.execute("some useless url");
+
+                AsyncTask<String, Integer, Bitmap> getLogoTask = new AsyncTask<String, Integer, Bitmap>() {
+                    Bitmap bitmap;
+                    HttpURLConnection connection;
                     @Override
-                    protected String doInBackground(String... strings) {
+                    protected Bitmap doInBackground(String... strings) {
+                        URL url = null;
                         try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e){
+                            url = new URL(strings[0]);
+                        } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
-                        return "some json here";
+                        connection = null;
+                        try {
+                            connection = (HttpURLConnection) url.openConnection();
+                            connection.setRequestMethod("GET");
+                            connection.setDoInput(true);
+                            connection.connect();
+                            int response = connection.getResponseCode();
+                            Log.i("From ForecastFragment", "The response code is " + response);
+                        } catch (IOException ioException ) {
+                            ioException.printStackTrace();
+                        }
+                        try {
+                            InputStream is = connection.getInputStream();
+                            bitmap = BitmapFactory.decodeStream(is);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+//                        connection.disconnect();
+                        return bitmap;
                     }
 
-                    @Override
-                    protected void onPreExecute() {
-                        Toast.makeText(getApplicationContext(), "preparing for refresh", Toast.LENGTH_LONG);
-                    }
+                    protected void onPostExecute(Bitmap bitmap) {
+//                        ImageView imageView = findViewById(R.id.logo);
+//                        imageView.setImageBitmap(bitmap);
+                        WeatherAndForecastFragment weatherAndForecastFragment = (WeatherAndForecastFragment) adapter.instantiateItem(viewPager, viewPager.getCurrentItem());
+                        ForecastFragment forecastFragment = (ForecastFragment) weatherAndForecastFragment.getChildFragmentManager().findFragmentById(R.id.fragment_forecast);
+                        ImageView logo = forecastFragment.getView().findViewById(R.id.logo);
+                        logo.setImageBitmap(bitmap);
 
-                    @Override
-                    protected void onPostExecute(String content) {
-                        Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
                     }
                 };
-
-                task.execute("some useless url");
-
+                getLogoTask.execute("https://usth.edu.vn/uploads/logo.png");
                 break;
             case R.id.triple_dots_button:
                 View triple_dot_view = findViewById(R.id.triple_dots_button);
@@ -227,4 +282,8 @@ public class WeatherActivity extends AppCompatActivity {
         super.onDestroy();
         Log.i(TAG, "This is onDestroy function");
     }
+
+
+
+
 }

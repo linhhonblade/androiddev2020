@@ -1,34 +1,55 @@
 package vn.edu.usth.usth.weather;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
 
 
 public class ForecastFragment extends Fragment {
+//    ScrollView scrollView;
+
+
+
+//    ImageView logo;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ScrollView scrollView = (ScrollView) inflater.inflate(R.layout.fragment_forecast, container, false);
+        FrameLayout frameLayout = (FrameLayout) inflater.inflate(R.layout.fragment_forecast, container, false);
+        ScrollView scrollView = frameLayout.findViewById(R.id.scroll);
+//        ScrollView scrollView = inflater.inflate(R.layout.fragment_forecast, container, false).findViewById(R.id.scroll);
+//        ScrollView scrollView = (ScrollView) inflater.inflate(R.layout.fragment_forecast, container, false);
         LinearLayout linearLayout = scrollView.findViewById(R.id.weather);
         LinearLayout row;
         TextView txt;
         ImageView icon;
         TextView weather_txt;
-
+//        logo = frameLayout.findViewById(R.id.logo);
 
         String days[] = getResources().getStringArray(R.array.day_array);
         String weather[] = getResources().getStringArray(R.array.weather_array);
@@ -67,7 +88,10 @@ public class ForecastFragment extends Fragment {
         }
 
 
-        return scrollView;
+        return frameLayout;
     }
+
+
+
 
 }
